@@ -41,10 +41,10 @@ const ld=ref(false);const rows=ref([]);const total=ref(0);const p=ref(1);const p
 const dv=ref(false);const ed=ref(false);const fr=ref(null);const ar=ref([])
 const fm=reactive({id:null,username:'',password:'',realName:'',phone:'',email:'',roleIds:[],status:1})
 const frr={username:[{required:true}],password:[{required:true,min:6}],realName:[{required:true}],roleIds:[{required:true}]}
-const roleMap=ref({})  // id → roleName
+const roleMap=ref({})
 onMounted(async()=>{const r=await getAllRoles();ar.value=r||[];r?.forEach(x=>roleMap.value[x.id]=x.roleName);if(isTeacherView.value){const t=ar.value.find(x=>x.roleCode==='ROLE_TEACHER');if(t)roleFilter.value=t.id};load()})
-async function load(){ld.value=true;try{const params={page:p.value,pageSize:ps.value,keyword:kw.value};if(roleFilter.value)params.roleId=roleFilter.value;const r=await getUserList(params);const list=r?.records||[];total.value=r?.total||0;for(const u of list){try{const ids=await request.get(`/users/${u.id}/roles`);u.roleNames=(ids||[]).map(id=>roleMap.value[id]||id).filter(Boolean)}catch{u.roleNames=[]}};rows.value=list}finally{ld.value=false}}
-async function open(row){ed.value=!!row;if(row){Object.assign(fm,{...row,password:'',roleIds:[]});try{const r=await request.get(`/users/${row.id}/roles`);fm.roleIds=r||[]}catch{fm.roleIds=[]}}else{Object.assign(fm,{id:null,username:'',password:'',realName:'',phone:'',email:'',roleIds:isTeacherView.value?[2]:[],status:1})};dv.value=true;setTimeout(()=>fr.value?.clearValidate(),100)}
+async function load(){ld.value=true;try{const params={page:p.value,pageSize:ps.value,keyword:kw.value};if(roleFilter.value)params.roleId=roleFilter.value;const r=await getUserList(params);const list=r?.records||[];total.value=r?.total||0;for(const u of list){try{const ids=await request.get('/users/'+u.id+'/roles');u.roleNames=(ids||[]).map(id=>roleMap.value[id]||id).filter(Boolean)}catch{u.roleNames=[]}};rows.value=list}finally{ld.value=false}}
+async function open(row){ed.value=!!row;if(row){Object.assign(fm,{...row,password:'',roleIds:[]});try{const r=await request.get('/users/'+row.id+'/roles');fm.roleIds=r||[]}catch{fm.roleIds=[]}}else{Object.assign(fm,{id:null,username:'',password:'',realName:'',phone:'',email:'',roleIds:isTeacherView.value?[2]:[],status:1})};dv.value=true;setTimeout(()=>fr.value?.clearValidate(),100)}
 async function save(){const v=await fr.value.validate().catch(()=>false);if(!v)return;const p={...fm};if(ed.value&&!p.password)delete p.password;ed.value?await updateUser(fm.id,p):await createUser(p);ElMessage.success('保存成功');dv.value=false;load()}
 async function doDel(id){await ElMessageBox.confirm('确认删除？','提示',{type:'warning'});await deleteUser(id);ElMessage.success('已删除');load()}
 </script>

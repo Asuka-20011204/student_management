@@ -29,7 +29,6 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        // 手动 new，不通过 Spring 注入 → 避免 Filter order 问题
         JwtAuthenticationFilter jwtFilter = new JwtAuthenticationFilter(jwtUtil);
         RateLimitFilter rateFilter = new RateLimitFilter();
 
@@ -41,9 +40,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/auth/**").permitAll()
                 .anyRequest().authenticated()
             )
-            // 频率限制（最先执行）
             .addFilterBefore(rateFilter, UsernamePasswordAuthenticationFilter.class)
-            // JWT 过滤器
             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
