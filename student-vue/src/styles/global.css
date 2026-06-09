@@ -1,0 +1,387 @@
+/* ============================================================
+   学生管理系统 — 玻璃蓝白 · 高可读性升级版
+   Glass · Bold shapes · Clear typography · Semantic icons
+   ============================================================ */
+
+/* 自定义字体 — 用于装饰性标题 */
+@font-face { font-family:'CuteFont'; src:url('@/assets/fonts/萝莉体 第二版.ttf'); }
+
+:root {
+  /* 蓝 — 柔和清新 */
+  --blue:       #5b8def;
+  --blue-dark:  #4070cc;
+  --blue-light: #eef3ff;
+  --blue-pale:  #f5f8ff;
+
+  /* 玻璃表面 */
+  --glass:      rgba(255,255,255,.52);
+  --glass-hover:rgba(255,255,255,.72);
+  --glass-strong:rgba(255,255,255,.65);
+  --glass-light: rgba(255,255,255,.35);
+  --glass-border:rgba(255,255,255,.45);
+  --white-solid:#ffffff;
+  --bg:         #e8eef6;
+
+  /* 字 */
+  --text:       #1a2240;
+  --text-sub:   #667799;
+  --text-dim:   #99aabb;
+
+  /* 边框 — 玻璃感淡边框 */
+  --border-sub: rgba(180,195,215,.35);
+
+  /* 语义 */
+  --ok:   #22a86a;
+  --warn: #e8983e;
+  --err:  #e04848;
+  --info: #4499cc;
+
+  /* 形状 — 圆润玻璃卡片 */
+  --r-sm:  10px;
+  --r-md: 16px;
+  --r-lg: 22px;
+
+  /* 阴影 — 柔和深度 */
+  --shadow: 0 8px 32px rgba(64,112,204,.10);
+  --shadow-sm: 0 4px 16px rgba(64,112,204,.08);
+  --shadow-lg: 0 12px 40px rgba(64,112,204,.12);
+
+  /* 玻璃模糊度 */
+  --blur: 14px;
+  --blur-strong: 20px;
+
+  --ease: cubic-bezier(.3,1.2,.6,1);
+  --trans: .25s var(--ease);
+
+  /* ★ 双字体系统：装饰体 + 可读体 ★ */
+  --font-display: 'CuteFont','PingFang SC','Microsoft YaHei',sans-serif;
+  --font-ui:      'PingFang SC','Microsoft YaHei','Hiragino Sans GB',-apple-system,'Segoe UI',sans-serif;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+html, body, #app {
+  height:100%;
+  font-family:var(--font-ui);          /* ★ 默认用高可读字体 */
+  font-size:14px; color:var(--text);
+  background:var(--bg);
+  background-image:
+    radial-gradient(circle at 20% 10%, rgba(91,141,239,.04) 0%, transparent 50%),
+    radial-gradient(circle at 80% 90%, rgba(64,112,204,.03) 0%, transparent 50%);
+  background-size:cover;
+  background-position:center;
+  background-attachment:fixed;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* 通用毛玻璃混入 */
+.glass {
+  background: var(--glass);
+  backdrop-filter: blur(var(--blur));
+  -webkit-backdrop-filter: blur(var(--blur));
+  border: 1px solid var(--glass-border);
+}
+
+::-webkit-scrollbar { width:5px; height:5px; }
+::-webkit-scrollbar-track { background:var(--blue-pale); }
+::-webkit-scrollbar-thumb { background:#c0cce0; border-radius:3px; }
+
+/* ============================================================
+   Element Plus — 粗边框 · 块状 · 图形感
+   ★ 仅标题使用装饰字体，UI 组件使用系统可读字体
+   ============================================================ */
+
+/* ★ 按钮 — 使用系统字体确保可读性 */
+.el-button {
+  font-family: var(--font-ui) !important;
+}
+
+/* ★ 输入框 — 使用系统字体确保可读性 */
+.el-input__inner,
+.el-textarea__inner,
+.el-select .el-input__inner {
+  font-family: var(--font-ui) !important;
+}
+
+/* ★ 表格 — 使用系统字体确保数据可读性 */
+.el-table,
+.el-table th.el-table__cell,
+.el-table td.el-table__cell {
+  font-family: var(--font-ui) !important;
+}
+
+/* ★ 表格内数值使用等宽数字 */
+.el-table .el-table__cell .cell {
+  font-feature-settings: 'tnum';
+}
+
+/* ★ 标签 — 系统字体 */
+.el-tag { font-family: var(--font-ui) !important; }
+
+/* ★ 分页 */
+.el-pagination { font-family: var(--font-ui) !important; }
+
+/* ★ 弹窗标题可用装饰字体 */
+.el-dialog__title {
+  font-family: var(--font-display) !important;
+}
+.el-dialog__body { font-family: var(--font-ui) !important; }
+
+/* ★ 表单标签 */
+.el-form-item__label { font-family: var(--font-ui) !important; }
+
+/* ★ 下拉菜单 */
+.el-dropdown-menu__item { font-family: var(--font-ui) !important; }
+.el-select-dropdown__item { font-family: var(--font-ui) !important; }
+
+/* ★ 提示/消息 */
+.el-message { font-family: var(--font-ui) !important; }
+.el-notification__content { font-family: var(--font-ui) !important; }
+
+/* ★ 空状态 */
+.el-empty__description { font-family: var(--font-ui) !important; }
+
+/* 按钮 — 毛玻璃圆润 */
+.el-button {
+  border-radius:22px !important;
+  font-weight:600 !important; letter-spacing:.3px !important;
+  transition:all var(--trans) !important;
+  border:none !important;
+}
+.el-button--primary {
+  background:var(--blue) !important;
+  color:#fff !important;
+  box-shadow:0 4px 16px rgba(91,141,239,.30) !important;
+}
+.el-button--primary:hover {
+  background:var(--blue-dark) !important;
+  transform:translateY(-2px);
+  box-shadow:0 8px 24px rgba(91,141,239,.40) !important;
+}
+.el-button--primary:active { transform:translateY(0); }
+.el-button--danger  { background:var(--err) !important; color:#fff !important; }
+.el-button--warning { background:var(--warn) !important; color:#fff !important; }
+.el-button--success { background:var(--ok) !important; color:#fff !important; }
+.el-button--default, .el-button--plain {
+  background:var(--glass) !important;
+  backdrop-filter:blur(var(--blur)) !important;
+  -webkit-backdrop-filter:blur(var(--blur)) !important;
+  border:1px solid var(--glass-border) !important;
+  color:var(--text-sub) !important;
+}
+.el-button--default:hover, .el-button--plain:hover {
+  background:var(--glass-hover) !important; color:var(--blue) !important;
+}
+
+/* 输入框 — 玻璃线框 */
+.el-input__wrapper,
+.el-select .el-input__wrapper,
+.el-date-editor .el-input__wrapper {
+  border-radius:20px !important;
+  background:var(--glass) !important;
+  backdrop-filter:blur(8px) !important;
+  -webkit-backdrop-filter:blur(8px) !important;
+  border:1px solid var(--glass-border) !important;
+  box-shadow:none !important;
+  transition:all var(--trans) !important;
+}
+.el-input__wrapper:hover,
+.el-select:hover .el-input__wrapper { border-color:rgba(91,141,239,.35) !important; }
+.el-input.is-focus .el-input__wrapper,
+.el-select.is-focus .el-input__wrapper {
+  border-color:var(--blue) !important;
+  box-shadow:0 0 0 4px rgba(91,141,239,.10) !important;
+}
+
+/* 表格 — 玻璃卡片 */
+.el-table {
+  --el-table-bg-color:transparent !important;
+  --el-table-tr-bg-color:transparent !important;
+  --el-table-header-bg-color:var(--glass-light) !important;
+  --el-table-row-hover-bg-color:var(--glass) !important;
+  --el-table-border-color:rgba(180,195,215,.15) !important;
+  border-radius:var(--r-md) !important;
+  overflow:hidden !important;
+  backdrop-filter:blur(var(--blur)) !important;
+  -webkit-backdrop-filter:blur(var(--blur)) !important;
+  background:var(--glass) !important;
+}
+.el-table th.el-table__cell {
+  background:var(--glass-light) !important;
+  font-weight:700 !important; font-size:12px !important;
+  letter-spacing:.5px !important; color:var(--blue-dark) !important;
+  border-bottom:1px solid rgba(180,195,215,.2) !important;
+  padding:14px 0 !important;
+}
+.el-table td.el-table__cell {
+  border-bottom:1px solid rgba(180,195,215,.10) !important;
+  padding:13px 0 !important;
+}
+
+/* 分页 */
+.el-pagination { margin-top:18px !important; justify-content:flex-end !important; }
+.el-pagination .el-pager li { border-radius:18px !important; }
+.el-pagination .el-pager li.is-active { background:var(--blue) !important; }
+
+/* 弹窗 — 强毛玻璃 */
+.el-dialog {
+  border-radius:var(--r-lg) !important;
+  background:var(--glass-strong) !important;
+  backdrop-filter:blur(var(--blur-strong)) !important;
+  -webkit-backdrop-filter:blur(var(--blur-strong)) !important;
+  border:1px solid var(--glass-border) !important;
+  box-shadow:var(--shadow-lg) !important;
+}
+.el-dialog__header { padding:20px 24px 14px !important; border-bottom:1px solid var(--glass-border) !important; }
+.el-dialog__title {
+  font-family:var(--font-display) !important;
+  font-size:18px !important; font-weight:700 !important; color:var(--blue-dark) !important;
+}
+.el-dialog__body { padding:22px 24px !important; }
+.el-dialog__footer { padding:14px 24px 20px !important; }
+
+/* 标签 — 圆润药丸 */
+.el-tag {
+  border-radius:14px !important; font-weight:600 !important; border:none !important;
+}
+.el-tag--success { background:rgba(34,168,106,.15) !important; color:#188048 !important; }
+.el-tag--warning { background:rgba(232,152,62,.15) !important; color:#a86820 !important; }
+.el-tag--danger  { background:rgba(224,72,72,.15) !important; color:#b83838 !important; }
+.el-tag--info    { background:var(--glass) !important; color:var(--text-sub) !important; }
+
+/* 数字输入框 — 隐藏默认丑陋的上下按钮 */
+.el-input-number .el-input-number__decrease,
+.el-input-number .el-input-number__increase {
+  opacity:0 !important;
+  transition:opacity .2s !important;
+}
+.el-input-number:hover .el-input-number__decrease,
+.el-input-number:hover .el-input-number__increase {
+  opacity:.6 !important;
+}
+.el-input-number .el-input-number__decrease:hover,
+.el-input-number .el-input-number__increase:hover {
+  opacity:1 !important; color:var(--blue) !important;
+}
+
+/* 下拉菜单 — 玻璃 */
+.el-menu { background:transparent !important; border-right:none !important; }
+.el-dropdown-menu {
+  border-radius:var(--r-md) !important;
+  background:var(--glass-strong) !important;
+  backdrop-filter:blur(var(--blur-strong)) !important;
+  -webkit-backdrop-filter:blur(var(--blur-strong)) !important;
+  border:1px solid var(--glass-border) !important;
+  box-shadow:var(--shadow) !important;
+}
+
+/* ============================================================
+   通用组件 — 玻璃卡片
+   ============================================================ */
+.page-container {
+  background:var(--glass);
+  backdrop-filter:blur(var(--blur));
+  -webkit-backdrop-filter:blur(var(--blur));
+  border:1px solid var(--glass-border);
+  border-radius:var(--r-lg);
+  box-shadow:var(--shadow);
+  padding:24px;
+}
+.page-header {
+  display:flex; justify-content:space-between; align-items:center;
+  margin-bottom:18px; padding-bottom:14px;
+  border-bottom:1px solid var(--glass-border);
+}
+.page-header h2 {
+  font-family:var(--font-display);
+  font-size:20px; font-weight:700; color:var(--blue-dark);
+  letter-spacing:1px;
+}
+
+.search-bar {
+  display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+  margin-bottom:16px; padding:14px 16px;
+  background:var(--glass-light);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+  border-radius:var(--r-md);
+  border:1px solid var(--glass-border);
+}
+
+.stat-cards {
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+  gap:14px; margin-bottom:18px;
+}
+.stat-card {
+  padding:20px 22px;
+  background:var(--glass);
+  backdrop-filter:blur(var(--blur));
+  -webkit-backdrop-filter:blur(var(--blur));
+  border:1px solid var(--glass-border);
+  border-radius:var(--r-md);
+  box-shadow:var(--shadow-sm);
+  transition:all var(--trans);
+}
+.stat-card:hover {
+  transform:translateY(-4px);
+  box-shadow:var(--shadow-lg);
+}
+.stat-card .value {
+  font-family:var(--font-display); font-size:28px; font-weight:700; color:var(--blue-dark);
+}
+.stat-card .label {
+  font-size:12px; font-weight:600; color:var(--text-sub); margin-top:4px; letter-spacing:.5px;
+}
+
+/* ★ 空状态容器 — 玻璃风格 */
+.empty-state {
+  padding:48px 24px;
+  background:var(--glass);
+  backdrop-filter:blur(var(--blur));
+  -webkit-backdrop-filter:blur(var(--blur));
+  border:1px solid var(--glass-border);
+  border-radius:var(--r-md);
+}
+
+/* ★ 图表容器 */
+.chart-box {
+  margin-top:14px; padding:18px;
+  background:var(--glass);
+  backdrop-filter:blur(var(--blur));
+  -webkit-backdrop-filter:blur(var(--blur));
+  border:1px solid var(--glass-border);
+  border-radius:var(--r-md);
+}
+
+/* ============================================================
+   玻璃折射升级 — 内侧高光 + 边界折射（来自 design-taste skill）
+   ============================================================ */
+.page-container, .el-dialog, .stat-card { position:relative; isolation:isolate; overflow:hidden; }
+.page-container::before, .el-dialog::before {
+  content:""; position:absolute; inset:0; z-index:-1; pointer-events:none;
+  border-radius:inherit;
+  background:linear-gradient(180deg, rgba(255,255,255,.20) 0%, rgba(255,255,255,.03) 40%, transparent 70%);
+}
+.stat-card::after {
+  content:""; position:absolute; top:0; left:0; right:0; height:1px;
+  background:linear-gradient(90deg, transparent 0%, rgba(255,255,255,.28) 15%, rgba(255,255,255,.08) 85%, transparent 100%);
+  pointer-events:none;
+}
+
+/* 减通透回退 — 不支持 blur 的设备降级为实色 */
+@media (prefers-reduced-transparency: reduce) {
+  .page-container, .el-dialog, .el-table, .stat-card, .search-bar,
+  .sb, .tb, .el-dropdown-menu, .el-button--default {
+    background:rgba(255,255,255,.94) !important;
+    backdrop-filter:none !important;
+    -webkit-backdrop-filter:none !important;
+  }
+}
+
+/* 按钮触觉反馈 — 点击下陷 */
+.el-button:active { transform:scale(.97) !important; }
+.el-button--primary:active { box-shadow:0 2px 8px rgba(91,141,239,.20) !important; }
+
+/* 骨架屏 + 空状态 */
+.el-table .el-loading-mask { background:rgba(255,255,255,.30) !important; backdrop-filter:blur(4px) !important; }
+.empty-state { display:flex; align-items:center; justify-content:center; min-height:200px; padding:40px; }
